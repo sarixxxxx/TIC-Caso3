@@ -1,0 +1,6 @@
+/**
+ * GeneradorAleatorio
+ */
+public class GeneradorAleatorio {
+
+}
