@@ -24,7 +24,7 @@ public class GeneradorAleatorio {
         respuesta[0] = r.nextInt(Math.round((float) maxProcesadores*3/4)) + 1; // procesadores
         int memoriaRaw = r.nextInt(Math.round((float) maxMemoria*3/4)) + 1;
         int potencia2= (int) Math.floor((float) Math.log(memoriaRaw)/Math.log(2));
-        respuesta [1] = r.nextInt((int) Math.pow(2, potencia2));
+        respuesta [1] = (int) Math.pow(2, potencia2);
 
         int almacenamientoRaw =  r.nextInt(Math.round((float) maxAlmacenamiento*3/4)) + 1;
         int multiplo2 = almacenamientoRaw /2 ;
