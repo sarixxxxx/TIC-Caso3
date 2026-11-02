@@ -7,16 +7,16 @@ import java.util.Set;
 
 public class ControladorMemoria {
     private final String[] paginas;
-    private final int tamPag;
+    private final int tamPagKiB;
     private final int totalGiB;
 
     public ControladorMemoria(
         int capacidad,
-        int tamanioPagina
+        int tamanioPaginaKiB
     ) {
         totalGiB = capacidad;
-        tamPag = tamanioPagina;
-        paginas = new String[totalGiB/tamPag];
+        tamPagKiB = tamanioPaginaKiB;
+        paginas = new String[totalGiB*(1024*1024)/(tamPagKiB)];
         Arrays.fill(paginas, "libre");
     }
 
@@ -26,7 +26,7 @@ public class ControladorMemoria {
     ) {
         int i = 0;
         Set<Integer> pagsReservadas = new HashSet<>();
-        int paginasNecesarias = (int) Math.ceil((float) n/tamPag);
+        int paginasNecesarias = (int) Math.ceil((float) n*(1024*1024)/tamPagKiB);
         while (i<paginas.length && pagsReservadas.size()<paginasNecesarias) {
             if (Objects.equals(paginas[i], "libre")) {
                 paginas[i] = idMV;

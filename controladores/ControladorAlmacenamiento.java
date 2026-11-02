@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class ControladorAlmacenamiento {
     private final String[] bloques;
-    private final int tamBloque;
+    private final int tamBloqueKiB;
     private final int totalGiB;
 
     public ControladorAlmacenamiento(
@@ -15,8 +15,8 @@ public class ControladorAlmacenamiento {
         int tamanioBloque
     ) {
         totalGiB = capacidad;
-        tamBloque = tamanioBloque;
-        bloques = new String[totalGiB/tamBloque];
+        tamBloqueKiB = tamanioBloque;
+        bloques = new String[totalGiB*(1024*1024)/(tamBloqueKiB)];
         Arrays.fill(bloques, "libre");
     }
     public synchronized Set<Integer> reservarBloque(
@@ -24,7 +24,7 @@ public class ControladorAlmacenamiento {
         int n
     ) {
         int i = 0;
-        int bloquesNecesarios = (int) Math.ceil((float) n/tamBloque);
+        int bloquesNecesarios = (int) Math.ceil((float) n*(1024*1024)/tamBloqueKiB);
         Set<Integer> bloquesReservados = new HashSet<>();
         while (i<bloques.length && bloquesReservados.size()<bloquesNecesarios) {
             if (Objects.equals(bloques[i], "libre")) {
