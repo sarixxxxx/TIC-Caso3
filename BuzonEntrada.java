@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BuzonEntrada {
-    private ArrayList buff;
+    private ArrayList<Solicitud> buff;
     private int n;
 
     public BuzonEntrada(
@@ -11,11 +11,22 @@ public class BuzonEntrada {
         buff = new ArrayList<Solicitud>();
     }
 
-    public void crearSolicitud( Solicitud s) {
-
+    public synchronized void crearSolicitud( Solicitud s) throws InterruptedException {
+        while (buff.size() == n){
+            wait();
+        }
+        buff.add(s);
+        notifyAll();
+        // mirar si si es con all o no
     }
 
-    // public Solicitud gestionarSolicitud(){
-
-    // }
+    public synchronized Solicitud gestionarSolicitud() throws InterruptedException{
+        while (buff.isEmpty()) {
+                wait();
+        }
+        Solicitud solicitud = buff.remove(0);
+        notifyAll();
+        // lo mismo acá 
+        return solicitud;
+    }
 }
