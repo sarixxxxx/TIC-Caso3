@@ -3,7 +3,7 @@ import java.util.logging.Logger;
 public class GestorSolicitud extends Thread {
     // este sería el consumidor
     private static final Logger logger = Logger.getLogger(GestorSolicitud.class.getName());
-    private BuzonEntrada buff;
+    private final BuzonEntrada buff;
 
     public GestorSolicitud(
         BuzonEntrada b
@@ -13,7 +13,7 @@ public class GestorSolicitud extends Thread {
 
     @Override 
     public void run(){
-        while (buff.hayUsuariosActivos()){
+        while (buff.hayUsuariosActivos()|| buff.haySolicitudes()){
             Solicitud s = buff.gestionarSolicitud();
         }
         logger.info("Finaliza gestor solicitud :)");

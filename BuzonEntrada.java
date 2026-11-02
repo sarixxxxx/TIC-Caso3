@@ -37,7 +37,7 @@ public class BuzonEntrada {
         if (buff.isEmpty()) {
             return null;
         }
-        Solicitud solicitud = buff.remove(0);
+        Solicitud solicitud = buff.removeFirst();
         notifyAll(); 
         return solicitud;
     }
@@ -48,4 +48,6 @@ public class BuzonEntrada {
     public synchronized boolean hayUsuariosActivos(){
         return usuariosActivos>0;
     }
+
+    public synchronized boolean haySolicitudes(){ return !buff.isEmpty();}
 }

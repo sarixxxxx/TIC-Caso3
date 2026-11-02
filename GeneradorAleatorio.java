@@ -4,9 +4,9 @@ import java.util.Random;
  * GeneradorAleatorio
  */
 public class GeneradorAleatorio {
-    private int maxProcesadores;
-    private int maxMemoria;
-    private int maxAlmacenamiento;
+    private final int maxProcesadores;
+    private final int maxMemoria;
+    private final int maxAlmacenamiento;
     private Random r= new Random();
 
     public GeneradorAleatorio(
