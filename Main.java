@@ -38,13 +38,14 @@ public class Main {
         logger.info(" Tamaño de bloque (en KiB) :");
         int bloque = sc.nextInt();
 
-        BuzonEntrada buzonEntrada = new BuzonEntrada(base);
-        GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio();
+        BuzonEntrada buzonEntrada = new BuzonEntrada(base, nu);
+        GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio(procesadores, memoria, almacenamiento);
 
-        for (int usuario = 0; usuario<nu;usuario ++) {
+        for (int usuario = 1; usuario<nu+1;usuario ++) {
             new Usuario(
                 buzonEntrada, 
                 generadorAleatorio, 
+                base,
                 usuario).start();
         }
     }

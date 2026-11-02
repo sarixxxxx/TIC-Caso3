@@ -1,28 +1,37 @@
+import java.util.logging.Logger;
+
 public class Usuario extends Thread {
+    private static final Logger logger = Logger.getLogger(Usuario.class.getName());
     private BuzonEntrada buff;
     private GeneradorAleatorio g;
     private int nSolicitudes;
+    private int idUsuario;
 
     public Usuario(
         BuzonEntrada b,
         GeneradorAleatorio g,
-        int n
+        int n, 
+        int id
     ) {
         buff = b;
         this.g = g;
-        nSolicitudes = n;
+        nSolicitudes = n*id ;
+        idUsuario = id;
     }  
 
     @Override
     public void run(){
         for (int i = 0; i<nSolicitudes; i++){
-            Solicitud s = new Solicitud(i, i, i, i);
+            int[] recursos = g.generar();
+            Solicitud s = new Solicitud(String.valueOf(idUsuario)+"-"+i,recursos[0],recursos[1] ,recursos[2]);
             try {
                 buff.crearSolicitud(s);
             } catch (InterruptedException e) {
-                System.out.println("error :(");
-                e.printStackTrace();
+                logger.info("error :(");
             }
         }
+        buff.reportarTerminacion();
+        logger.info("Finalizada ejecución para Usuario "+idUsuario);
+
     }
 }

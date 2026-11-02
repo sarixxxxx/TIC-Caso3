@@ -1,11 +1,11 @@
 public class Solicitud {
-    private int id;
+    private String id;
     private int numProcesadores;
     private int memEspacio; // en GiB
     private int espacioDisco;
 
     public Solicitud(
-        int id,
+        String id,
         int np,
         int me,
         int ed
