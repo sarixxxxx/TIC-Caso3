@@ -40,13 +40,26 @@ public class Main {
 
         BuzonEntrada buzonEntrada = new BuzonEntrada(base, nu);
         GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio(procesadores, memoria, almacenamiento);
+        ZonaEspera ze = new ZonaEspera(
+                procesadores,
+                memoria,
+                pagina,
+                almacenamiento,
+                bloque,
+                tam2
+        );
 
         for (int usuario = 1; usuario<nu+1;usuario ++) {
             new Usuario(
-                buzonEntrada, 
-                generadorAleatorio, 
+                buzonEntrada,
+                generadorAleatorio,
                 base,
                 usuario).start();
         }
+
+        for (int gestor =0; gestor<ng; gestor++) {
+            new GestorSolicitud(buzonEntrada, ze).start();
+        }
+
     }
 }

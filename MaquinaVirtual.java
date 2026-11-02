@@ -18,6 +18,7 @@ public class MaquinaVirtual extends Thread {
         ZonaEspera ze
     ) {
         this.s = s;
+        idMV = s.getId();
         this.ze = ze;
     }
 
@@ -29,6 +30,7 @@ public class MaquinaVirtual extends Thread {
         try {
             Thread.sleep(r.nextInt(minMs,maxMs+1 ));
             ze.finalizarReservaRecurso(this);
+            System.out.println("Finaliza máquina con id: "+s.getId());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
