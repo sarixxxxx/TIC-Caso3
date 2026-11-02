@@ -24,9 +24,10 @@ public class ControladorMemoria {
         String idMV,
         int n
     ) {
+        //n ya llega en KiB
         int i = 0;
         Set<Integer> pagsReservadas = new HashSet<>();
-        int paginasNecesarias = (int) Math.ceil((float) n*(1024*1024)/tamPagKiB);
+        int paginasNecesarias = (int) Math.ceil((float) n/tamPagKiB);
         while (i<paginas.length && pagsReservadas.size()<paginasNecesarias) {
             if (Objects.equals(paginas[i], "libre")) {
                 paginas[i] = idMV;

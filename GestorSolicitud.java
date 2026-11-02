@@ -19,6 +19,7 @@ public class GestorSolicitud extends Thread {
         while (buff.hayUsuariosActivos()|| buff.haySolicitudes()){
             Solicitud s = buff.gestionarSolicitud();
             while  (ze.esEsperaLimpieza()){
+                logger.info("[ GESTOR SOLICITUD ]: Está en espera limpieza");
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {
@@ -26,6 +27,7 @@ public class GestorSolicitud extends Thread {
                 }
             }
             MaquinaVirtual mv = new MaquinaVirtual(s, ze);
+            logger.info("[ GESTOR SOLICITUD ]: Creó máquina virtual con id "+ mv.getIdMV());
             try {
                 ze.reservarRecurso(mv);
             } catch (InterruptedException e) {

@@ -25,13 +25,14 @@ public class Usuario extends Thread {
             int[] recursos = g.generar();
             Solicitud s = new Solicitud(String.valueOf(idUsuario)+"-"+i,recursos[0],recursos[1] ,recursos[2]);
             try {
+                logger.info("[ USUARIO ]: Creando solicitud "+ s.getId());
                 buff.crearSolicitud(s);
             } catch (InterruptedException e) {
                 logger.info("error :(");
             }
         }
         buff.reportarTerminacion();
-        logger.info("Finalizada ejecución para Usuario "+idUsuario);
+        logger.info("[ USUARIO ]: Finalizada ejecución para "+idUsuario);
 
     }
 }

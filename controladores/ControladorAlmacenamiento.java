@@ -23,8 +23,9 @@ public class ControladorAlmacenamiento {
         String idMV,
         int n
     ) {
+        //lo mismo acá, n llega en KiB
         int i = 0;
-        int bloquesNecesarios = (int) Math.ceil((float) n*(1024*1024)/tamBloqueKiB);
+        int bloquesNecesarios = (int) Math.ceil((float) n/tamBloqueKiB);
         Set<Integer> bloquesReservados = new HashSet<>();
         while (i<bloques.length && bloquesReservados.size()<bloquesNecesarios) {
             if (Objects.equals(bloques[i], "libre")) {

@@ -41,28 +41,35 @@ public class ZonaEspera {
                     Set<Integer> alm = ca.reservarBloque(mv.getIdMV(), mv.getS().getEspacioDisco());
                     if (alm != null) {
                         // coronó, ahora tiene que correr la máquina virtual
-                        enEspera.remove(mv.getIdMV());
-                        if (enEspera.size()==0){
-                            this.limpiezaZona = false;
-                        }
                         mv.setProcAsignados(proc);
                         mv.setPagsAsignadas(mem);
                         mv.setBloquesAsignados(alm);
-                        if ( enEspera.size()>= umbral) {
+                        System.out.println("[ ZONA ESPERA ] : Se consiguieron todos los recursos para la máquina "+ mv.getIdMV()+ " id. Procesadores: "+mv.getProcAsignados()+", paginas "+mv.getPagsAsignadas().size()+", bloques "+ mv.getBloquesAsignados().size() );
+                        enEspera.remove(mv.getIdMV());
+                        if (enEspera.size()==0){
+                            if(limpiezaZona) System.out.println("[ ZONA ESPERA ] : Acaba tiempo de espera limpieza con id mv "+ mv.getIdMV());
+                            this.limpiezaZona = false;
+                        }
+                        if ( enEspera.size()>= umbral && !limpiezaZona) {
+                            System.out.println("Empieza tiempo de limpieza con máquina virtual " +mv.getIdMV());
                             this.limpiezaZona = true;
                         }
                         mv.start();
 
                         return true;
                     } else {
+                        System.out.println("[ ZONA ESPERA ] : Faltaron recursos para la máquina (bloques en disco) para id mv "+ mv.getIdMV());
                         cm.rollbackPaginas(mem);
                         cp.rollbackProcesadores(proc);
                     }
                 } else {
+                    System.out.println("[ ZONA ESPERA ] : Faltaron recursos para la máquina (bloques en disco y páginas) para id mv "+ mv.getIdMV());
                     cp.rollbackProcesadores(proc);
                 }
             }
-            if (enEspera.size()>=umbral){
+            System.out.println("[ ZONA ESPERA ] : Faltaron recursos para la máquina (todo faltó) para id mv "+ mv.getIdMV());
+            if (enEspera.size()>=umbral && !limpiezaZona){
+                System.out.println("[ ZONA ESPERA ]: Empieza tiempo de limpieza con máquina virtual " +mv.getIdMV());
                 this.limpiezaZona = true;
             }
             wait();
@@ -74,6 +81,8 @@ public class ZonaEspera {
     }
 
     public synchronized void finalizarReservaRecurso(MaquinaVirtual mv) {
+        System.out.println("[ ZONA ESPERA ] : Acabó reserva recurso máquina virtual  " + mv.getIdMV());
+
         cp.rollbackProcesadores(mv.getProcAsignados());
         cm.rollbackPaginas(mv.getPagsAsignadas());
         ca.rollbackBloques(mv.getBloquesAsignados());

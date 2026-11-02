@@ -39,7 +39,7 @@ public class Main {
         int bloque = sc.nextInt();
 
         BuzonEntrada buzonEntrada = new BuzonEntrada(base, nu);
-        GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio(procesadores, memoria, almacenamiento);
+        GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio(procesadores, memoria*1024*1024, almacenamiento*1024*1024);
         ZonaEspera ze = new ZonaEspera(
                 procesadores,
                 memoria,

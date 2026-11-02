@@ -16,9 +16,11 @@ public class BuzonEntrada {
 
     public synchronized void crearSolicitud( Solicitud s) throws InterruptedException {
         while (buff.size() == n){
+            System.out.println("[ BUZON ENTRADA ] Espera solicitud por buffer lleno "+ s.getId());
             wait();
         }
         buff.add(s);
+        System.out.println("[ BUZON ENTRADA ] Solicitud recibida al buffer "+ s.getId());
         notify();
         // mirar si si es con all o no
     }
@@ -30,6 +32,7 @@ public class BuzonEntrada {
             Thread.yield();
             s = obtenerSolicitud();
         }
+        System.out.println("[ BUZON ENTRADA - GESTOR ] Procesamiento de solicituddd "+ s.getId());
         return s;
     }
     public synchronized Solicitud obtenerSolicitud(){
