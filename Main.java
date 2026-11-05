@@ -38,7 +38,7 @@ public class Main {
         logger.info(" Tamaño de bloque (en KiB) :");
         int bloque = sc.nextInt();
 
-        BuzonEntrada buzonEntrada = new BuzonEntrada(base, nu);
+        BuzonEntrada buzonEntrada = new BuzonEntrada(tam1, nu);
         GeneradorAleatorio generadorAleatorio = new GeneradorAleatorio(procesadores, memoria*1024*1024, almacenamiento*1024*1024);
         ZonaEspera ze = new ZonaEspera(
                 procesadores,
